@@ -1,10 +1,17 @@
-import http from 'node:http'
+import http from "node:http";
 
-const server = http.createServer((request,response)=>{
-   const {method,url} = request
+const server = http.createServer((request, response) => {
+  const { method, url } = request;
 
-    
-    return response.writeHead(404).end(`Metodo: ${method} \nURl: ${url}`)
-})
+  if (method === "GET" && url === "/products") {
+    return response.end("Lista de produtos");
+  }
 
-server.listen(3333)
+  if (method === "POST" && url === "/products") {
+    return response.writeHead(201).end("Produto cadastrado");
+  }
+
+  return response.writeHead(404).end("Rota não encontrado");
+});
+
+server.listen(3333);
